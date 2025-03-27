@@ -8,17 +8,26 @@ screen.tracer(0)
 screen.setup(width=800, height=600)
 screen.title("Pong Game")
 
-paddle = Paddle((350, 0))
+r_paddle = Paddle((350, 0))
+l_paddle = Paddle((-350, 0))
 
-def go_up():
-    paddle.go_up()
+def r_paddle_go_up():
+    r_paddle.go_up()
 
-def go_down():
-    paddle.go_down()
+def r_paddle_go_down():
+    r_paddle.go_down()
+
+def l_paddle_go_up():
+    l_paddle.go_up()
+
+def l_paddle_go_down():
+    l_paddle.go_down()
 
 screen.listen()
-screen.onkey(go_up, "Up")
-screen.onkey(go_down, "Down")
+screen.onkey(r_paddle_go_up, "Up")
+screen.onkey(r_paddle_go_down, "Down")
+screen.onkey(l_paddle_go_up, "w")
+screen.onkey(l_paddle_go_down, "s")
 
 game_on = True
 
