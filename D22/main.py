@@ -1,5 +1,6 @@
-from turtle import Screen
+from turtle import Screen, Turtle
 from paddle import Paddle
+from ball import Ball
 
 # Screen setup
 screen = Screen()
@@ -20,25 +21,27 @@ screen.onkey(r_paddle.go_up, "Up")
 screen.onkey(r_paddle.go_down, "Down")
 screen.onkey(l_paddle.go_up, "w")
 screen.onkey(l_paddle.go_down, "s")
-from ball import Ball
 
-
+# Ball setup
 ball = Ball()
 
-# In your game loop:
-while game_on:
-    ball.move()
-    screen.update()
-
-    # Check for top/bottom wall collisions
-    if ball.ycor() > 280 or ball.ycor() < -280:
-        ball.bounce_y()
-
-    # Check for paddle collisions
-    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
-        ball.bounce_x()
 game_on = True
 while game_on:
     screen.update()
+    ball.move()
+    ball.update(r_paddle, l_paddle)
+
+    # Check for game over (wall hit)
+    if ball.check_game_over():
+        game_on = False
+
+# Game over display
+screen.tracer(1)
+game_over = Turtle()
+game_over.hideturtle()
+game_over.color("white")
+game_over.penup()
+game_over.goto(0, 0)
+game_over.write("GAME OVER!", align="center", font=("Arial", 36, "normal"))
 
 screen.exitonclick()
